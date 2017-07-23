@@ -22,6 +22,30 @@ public class BFSearch {
         this.n = n;
     }
 
+    public void printArr(int arr[][]){
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                switch (arr[i][j]) {
+                    case -1:
+                        System.out.format("%3c", '#');
+                        break;
+                    case -2:
+                        System.out.format("%3c", '0');
+                        break;
+                    case -3:
+                        System.out.format("%3c", '*');
+                        break;
+                    case 0:
+                        System.out.format("%3c", '-');
+                        break;
+                    default:
+                        System.out.format("%3d", arr[i][j]);
+                }
+            }
+            System.out.println();
+        }
+    }
+
 
     public boolean search(int x1, int y1, int x2, int y2, int searchArray[][]) {
         int proceedArray[][] = new int[m][n];
@@ -42,28 +66,8 @@ public class BFSearch {
         searchArray[x2][y2] = 1;
         getPath(x2, y2, searchArray, proceedArray);
 
+        printArr(searchArray);
 
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                switch (searchArray[i][j]) {
-                    case -1:
-                        System.out.format("%3c", '#');
-                        break;
-                    case -2:
-                        System.out.format("%3c", '0');
-                        break;
-                    case -3:
-                        System.out.format("%3c", '*');
-                        break;
-                    case 0:
-                        System.out.format("%3c", '-');
-                        break;
-                    default:
-                        System.out.format("%3d", searchArray[i][j]);
-                }
-            }
-            System.out.println();
-        }
 
 
         return true;
@@ -81,22 +85,18 @@ public class BFSearch {
 
         //top
         if(currY > 0 && proceedArray[currX][currY-1] != WALL &&  proceedArray[currX][currY-1] == curr ) {
-            //searchArray[currX][currY-1] = PATH;
             getPath(currX, currY - 1, searchArray, proceedArray);
         }
         //left
         else if(currX > 0 && proceedArray[currX-1][currY] != WALL && proceedArray[currX-1][currY] == curr){
-            //searchArray[currX-1][currY] = PATH;
             getPath(currX-1, currY, searchArray, proceedArray);
         }
         //bottom
         else if(currY < n - 1 && proceedArray[currX][currY+1] != WALL && proceedArray[currX][currY+1] == curr){
-            //searchArray[currX][currY+1] = PATH;
             getPath(currX, currY+1, searchArray, proceedArray);
         }
         //right
         else if(currX < m - 1 && proceedArray[currX+1][currY] != WALL && proceedArray[currX+1][currY] == curr){
-            //searchArray[currX+1][currY] = PATH;
             getPath(currX+1, currY, searchArray, proceedArray);
         }
     }
